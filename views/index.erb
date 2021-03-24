@@ -1,0 +1,11 @@
+<h2>Latests posts:</h2>
+<br/>
+
+<% @results.each do |post|	%>
+
+	<h3> <%= post['CONTENT']%></h3>
+	
+	<h5> Added at <%= post['CREATED_DATE']%> </h5>
+	<br/>
+	<hr />
+	<% end %> 

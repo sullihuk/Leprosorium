@@ -34,7 +34,9 @@ end
 
 
 get '/' do
-	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
+	init_db
+	@results = @db.execute 'select * from posts order by id desc'
+	erb :index
 end
 
 get '/new' do
@@ -53,6 +55,7 @@ post '/new' do
 		else
 			@db.execute 'INSERT INTO Posts (CONTENT, CREATED_DATE) VALUES (?,datetime())', [@content]
 			@message = 'Благодарочка за ваш коммент'
+			erb :index
 		end
 
 
