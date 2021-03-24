@@ -54,10 +54,20 @@ post '/new' do
 			erb :new
 		else
 			@db.execute 'INSERT INTO Posts (CONTENT, CREATED_DATE) VALUES (?,datetime())', [@content]
+			
+			redirect to '/'
 			@message = 'Благодарочка за ваш коммент'
-			erb :index
 		end
 
 
 	#erb "you typed #{@content}"
 	end
+
+get '/details/:post_id' do
+	post_id = params[:post_id]
+	init_db
+	results = @db.execute 'select * from posts where id = ?', [post_id]
+	@row = results[0]
+
+	erb :details
+end
