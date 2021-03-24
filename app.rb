@@ -19,6 +19,16 @@ before do
 	init_db
 end
 
+configure do
+	
+	@db.execute 'CREATE TABLE IF NOT EXISTS Posts 
+	(
+	"ID" INTEGER PRIMARY KEY AUTOINCREMENT, 
+	"CREATED DATE" DATE,
+	"CONTENT" TEXT
+	)'
+
+end
 
 
 
