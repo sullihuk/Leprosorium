@@ -9,6 +9,15 @@
 	<p/>
 	
 	<h4>Comments:</h4>
+
+	<% @comments.each do |comment|%>
+	<p>
+
+	<%= comment['CONTENT'] %>
+</p>
+<hr/>
+<%end%>
+
 	<p>
 		<form action="/details/<%= @row['ID']%>" method="POST" >
 	<div class="mb-3">

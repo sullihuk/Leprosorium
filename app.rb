@@ -73,10 +73,15 @@ post '/new' do
 	end
 
 get '/details/:post_id' do
+
+
 	post_id = params[:post_id]
+
 	init_db
 	results = @db.execute 'select * from posts where id = ?', [post_id]
 	@row = results[0]
+
+	@comments = @db.execute 'select * from Comments where post_id = ? order by id desc', [post_id]
 
 	erb :details
 end
