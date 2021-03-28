@@ -27,7 +27,8 @@ configure do
 	(
 	"ID" INTEGER PRIMARY KEY AUTOINCREMENT, 
 	"CREATED_DATE" DATE,
-	"CONTENT" TEXT
+	"CONTENT" TEXT,
+	"NAME" TEXT
 	)'
 
 	@db.execute 'CREATE TABLE IF NOT EXISTS Comments
@@ -57,12 +58,13 @@ post '/new' do
 	init_db
 
 	@content = params[:content]
+	@commentator = params[:commentator]
 	
-		if @content.length <= 0
-			@error = 'Type text post'
+		if @content.length <= 0 || @commentator.length < 1 
+			@error = 'Type text post or your name'
 			erb :new
 		else
-			@db.execute 'INSERT INTO Posts (CONTENT, CREATED_DATE) VALUES (?,datetime())', [@content]
+			@db.execute 'INSERT INTO Posts (CONTENT, CREATED_DATE, NAME) VALUES (?,datetime(),?)', [@content, @commentator]
 			
 			redirect to '/'
 			@message = 'Благодарочка за ваш коммент'
