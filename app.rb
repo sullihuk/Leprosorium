@@ -90,17 +90,31 @@ end
 
 post '/details/:post_id' do
 
+	init_db
 
 	post_id = params[:post_id]
 	@content = params[:content]
+	
+	results = @db.execute 'select * from posts where id = ?', [post_id]
+	@row = results[0]
 
-	@db.execute 'INSERT INTO Comments (
+	@comments = @db.execute 'select * from Comments where post_id = ? order by id desc', [post_id]
 
-	CONTENT, CREATED_DATE, POST_ID)
-	 VALUES 
-	 (?,datetime(),?
-	 )', [@content, post_id]
+	
 
-	redirect to ('/details/' + post_id)
+    	if @content.size <= 1 
+			@error1 = 'Type text comment'
+			erb :details
+			else
+			
+			@db.execute 'INSERT INTO Comments (
+
+			CONTENT, CREATED_DATE, POST_ID)
+			 VALUES 
+			 (?,datetime(),?
+			 )', [@content, post_id]
+
+			redirect to ('/details/' + post_id)
+		end
 
 	end
